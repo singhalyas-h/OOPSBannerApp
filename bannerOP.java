@@ -1,60 +1,99 @@
-public class OOPSBannerApp {
+import java.util.HashMap;
+import java.util.Map;
 
-    // Method to generate the pattern for the letter 'O'
-    public static String[] getOPattern() {
-        return new String[]{
-                " *** ",
-                "*   *",
-                "*   *",
-                "*   *",
-                "*   *",
-                "*   *",
-                " *** "
-        };
+public class OOPSBannerApp7 {
+
+    /* ------------------------------
+       Static Inner Class
+       ------------------------------ */
+    static class CharacterPattern {
+
+        private char character;
+        private String[] pattern;
+
+        // Constructor
+        public CharacterPattern(char character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
+        }
+
+        // Getter
+        public String[] getPattern() {
+            return pattern;
+        }
     }
 
-    // Method to generate the pattern for the letter 'P'
-    public static String[] getPPattern() {
-        return new String[]{
-                "**** ",
-                "*   *",
-                "*   *",
-                "**** ",
-                "*    ",
-                "*    ",
-                "*    "
-        };
+    /* ------------------------------
+       Character Pattern Map
+       ------------------------------ */
+    static class CharacterPatternMap {
+
+        private static final Map<Character, CharacterPattern> patternMap = new HashMap<>();
+
+        static {
+            // Letter O
+            patternMap.put('O', new CharacterPattern('O', new String[]{
+                    " ***** ",
+                    "*     *",
+                    "*     *",
+                    "*     *",
+                    " ***** "
+            }));
+
+            // Letter P
+            patternMap.put('P', new CharacterPattern('P', new String[]{
+                    "****** ",
+                    "*     *",
+                    "****** ",
+                    "*      ",
+                    "*      "
+            }));
+
+            // Letter S
+            patternMap.put('S', new CharacterPattern('S', new String[]{
+                    " ***** ",
+                    "*      ",
+                    " ***** ",
+                    "      *",
+                    " ***** "
+            }));
+        }
+
+        public static CharacterPattern getPattern(char ch) {
+            return patternMap.get(ch);
+        }
     }
 
-    // Method to generate the pattern for the letter 'S'
-    public static String[] getSPattern() {
-        return new String[]{
-                " ****",
-                "*    ",
-                "*    ",
-                " *** ",
-                "    *",
-                "    *",
-                "**** "
-        };
+    /* ------------------------------
+       Banner Printer
+       ------------------------------ */
+    public static void printBanner(String text) {
+
+        int height = 5;
+
+        for (int row = 0; row < height; row++) {
+
+            StringBuilder line = new StringBuilder();
+
+            for (char ch : text.toCharArray()) {
+
+                CharacterPattern cp =
+                        CharacterPatternMap.getPattern(Character.toUpperCase(ch));
+
+                if (cp != null) {
+                    line.append(cp.getPattern()[row]).append("  ");
+                }
+            }
+
+            System.out.println(line);
+        }
     }
 
-    // Main method to run the banner display
+    /* ------------------------------
+       MAIN METHOD
+       ------------------------------ */
     public static void main(String[] args) {
 
-        // Declare String arrays to hold patterns for each letter
-        String[] oPattern = getOPattern();
-        String[] pPattern = getPPattern();
-        String[] sPattern = getSPattern();
-
-        // Use a loop to assemble each line of the banner
-        for (int i = 0; i < oPattern.length; i++) {
-            System.out.println(
-                    oPattern[i] + "  " +
-                    oPattern[i] + "  " +
-                    pPattern[i] + "  " +
-                    sPattern[i]
-            );
-        }
+        printBanner("OOPS");
     }
 }
