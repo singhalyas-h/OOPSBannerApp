@@ -1,11 +1,11 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class OOPSBannerApp7 {
+public class OOPSBannerAppUC8 {
 
-    /* ------------------------------
-       Static Inner Class
-       ------------------------------ */
+    /* -----------------------------------
+       Character Pattern Storage (MODEL)
+       ----------------------------------- */
     static class CharacterPattern {
 
         private char character;
@@ -17,21 +17,23 @@ public class OOPSBannerApp7 {
             this.pattern = pattern;
         }
 
-        // Getter
         public String[] getPattern() {
             return pattern;
         }
     }
 
-    /* ------------------------------
-       Character Pattern Map
-       ------------------------------ */
-    static class CharacterPatternMap {
+    /* -----------------------------------
+       HashMap for Pattern Management
+       ----------------------------------- */
+    static class PatternRepository {
 
-        private static final Map<Character, CharacterPattern> patternMap = new HashMap<>();
+        private static final Map<Character, CharacterPattern> patternMap =
+                new HashMap<>();
 
+        // Static block initializes patterns
         static {
-            // Letter O
+
+            // O
             patternMap.put('O', new CharacterPattern('O', new String[]{
                     " ***** ",
                     "*     *",
@@ -40,7 +42,7 @@ public class OOPSBannerApp7 {
                     " ***** "
             }));
 
-            // Letter P
+            // P
             patternMap.put('P', new CharacterPattern('P', new String[]{
                     "****** ",
                     "*     *",
@@ -49,7 +51,7 @@ public class OOPSBannerApp7 {
                     "*      "
             }));
 
-            // Letter S
+            // S
             patternMap.put('S', new CharacterPattern('S', new String[]{
                     " ***** ",
                     "*      ",
@@ -59,15 +61,16 @@ public class OOPSBannerApp7 {
             }));
         }
 
+        // Lookup function (HashMap retrieval)
         public static CharacterPattern getPattern(char ch) {
-            return patternMap.get(ch);
+            return patternMap.get(Character.toUpperCase(ch));
         }
     }
 
-    /* ------------------------------
-       Banner Printer
-       ------------------------------ */
-    public static void printBanner(String text) {
+    /* -----------------------------------
+       Banner Rendering Logic (VIEW)
+       ----------------------------------- */
+    public static void renderBanner(String text) {
 
         int height = 5;
 
@@ -78,22 +81,24 @@ public class OOPSBannerApp7 {
             for (char ch : text.toCharArray()) {
 
                 CharacterPattern cp =
-                        CharacterPatternMap.getPattern(Character.toUpperCase(ch));
+                        PatternRepository.getPattern(ch);
 
                 if (cp != null) {
                     line.append(cp.getPattern()[row]).append("  ");
                 }
             }
 
-            System.out.println(line);
+            System.out.println(line.toString());
         }
     }
 
-    /* ------------------------------
+    /* -----------------------------------
        MAIN METHOD
-       ------------------------------ */
+       ----------------------------------- */
     public static void main(String[] args) {
 
-        printBanner("OOPS");
+        String bannerText = "OOPS";
+
+        renderBanner(bannerText);
     }
 }
